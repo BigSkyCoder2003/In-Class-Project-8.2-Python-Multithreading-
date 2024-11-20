@@ -14,15 +14,16 @@ def range_sum(name, count, range_):
     for i in range(range_[0], range_[1]+1):
         total_sum += i
     results[count] = total_sum
-    
-
-
-
+    print(total_sum)
 ranges = []
 ranges_sum = 0
-ranges.append([1,5])
-ranges.append([20,22])
-ranges.append([15,63])
+ranges = [
+    [10, 20],
+    [1, 5],
+    [70, 80],
+    [27, 92],
+    [0, 16]
+]
 
 # Launch this many threads
 THREAD_COUNT = len(ranges)
@@ -47,16 +48,21 @@ for i in range(THREAD_COUNT):
 
     # The thread won't start executing until we call `start()`:
     t.start()
+        
+    threads.append(t)
+
 
     # Keep track of this thread so we can join() it later.
-    threads.append(t)
+    
 
 # Join all the threads back up to this, the main thread. The main thread
 # will block on the join() call until the thread is complete. If the
 # thread is already complete, the join() returns immediately.
+print(results)
+
+for t in threads:
+    t.join()
 for i in results:
 
   ranges_sum += i
-print(ranges_sum)
-for t in threads:
-    t.join()
+print(f'Sum of ranges: {ranges_sum}')
